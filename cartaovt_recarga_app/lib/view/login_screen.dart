@@ -18,11 +18,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _entrar() {
     if (!_formKey.currentState!.validate()) return;
-    if (!widget.login.entrar(_cartaoController.text, _senhaController.text)) return;
+    if (!widget.login.entrar(_cartaoController.text, _senhaController.text))
+      return;
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => InicioScreen(login: widget.login),
-      ),
+      MaterialPageRoute(builder: (_) => LoginScreen(login: widget.login)),
     );
   }
 
