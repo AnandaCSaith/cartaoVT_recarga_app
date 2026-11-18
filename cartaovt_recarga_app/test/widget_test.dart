@@ -10,20 +10,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(CartaoVTRecargaApp());
+  testWidgets('Entrada recusa formulário vazio', (tester) async {
+    await tester.pumpWidget(const CartaoVTRecargaApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    final botaoEnviar = find.text('Entrar');
+    expect(botaoEnviar, findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.ensureVisible(botaoEnviar);
+    await tester.tap(botaoEnviar);
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+
+  expect(find.text('Campo obrigatório'), findsOneWidget);
+  });
+
+  // CORREÇÃO: Aspas corrigidas na descrição do teste
+  testWidgets('Entrar a tela inicial', (tester) async {
+    await tester.pumpWidget(const CartaoVTRecargaApp());
+    
+    // Insere os dados nos campos de texto
+    await tester.enterText(find.byType(TextFormField).at(0), '0000.0000');
+    await tester.enterText(find.byType(TextFormField).at(1), '0000');
+    
+    // Clica no botão para entrar
+    await tester.tap(find.text('Entrar'));
+    await tester.pumpAndSettle();
+    
+    expect(find.text('O que você precisa hoje?'), findsOneWidget);
+  });
+
+  testWidgets('Tela de entrada segue as diretrizes de acessibilidade', (
+    tester,
+  ) async {
+    final handle = tester.ensureSemantics();
+    await tester.pumpWidget(const CartaoVTRecargaApp());
+
+    // Validações de acessibilidade
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
+
+    handle.dispose();
   });
 }
