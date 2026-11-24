@@ -18,8 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _entrar() {
     if (!_formKey.currentState!.validate()) return;
-    if (!widget.login.entrar(_cartaoController.text, _senhaController.text))
-      return;
+    if (!widget.login.entrar(_cartaoController.text, _senhaController.text)) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (_) => LoginScreen(login: widget.login)),
     );
@@ -97,8 +96,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     validator: widget.login.validarSenha,
                   ),
                   const SizedBox(height: 32.0),
-                  ElevatedButton(
+                  FilledButton(
                     onPressed: _entrar,
+                    style: FilledButton.styleFrom(
+                      minimumSize: Size.fromHeight(50),
+                    ),
                     child: const Text('Entrar'),
                   ),
                 ],

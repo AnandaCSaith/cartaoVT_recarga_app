@@ -1,4 +1,5 @@
 import 'package:cartaovt_recarga_app/controllers/login_controller.dart';
+import 'package:cartaovt_recarga_app/theme/tema.dart';
 import 'package:cartaovt_recarga_app/view/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -23,10 +24,8 @@ class _CartaoVTRecargaAppState extends State<CartaoVTRecargaApp> {
     return MaterialApp(
       title: 'Cartão VT Recarga',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      darkTheme: ThemeData.dark(),
+      theme: TemaCartaoVTRecargaApp.claro(),
+      darkTheme: TemaCartaoVTRecargaApp.escuro(),
       home: LoginScreen(login: loginController),
     );
   }

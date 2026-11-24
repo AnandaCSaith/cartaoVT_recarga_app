@@ -1,0 +1,33 @@
+import 'package:flutter/material.dart';
+
+class TemaCartaoVTRecargaApp {
+  static const corSemente = Color(0xFF2c7952);
+
+  static const espacoP = 8.0;
+  static const espacoM = 16.0;
+  static const espacoG = 24.0;
+
+  static ThemeData claro() => _base(Brightness.light);
+  static ThemeData escuro() => _base(Brightness.dark);
+
+  //Função que recebe um brilho e aplica no theme
+  static ThemeData _base(Brightness brilho) {
+    final cores = ColorScheme.fromSeed(
+      seedColor: corSemente,
+      //surface: const Color(0xFFfbfcfe),
+      brightness: brilho,
+    );
+
+    return ThemeData(
+      colorScheme: cores,
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          minimumSize: Size.fromHeight(52),
+          textStyle: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(border: OutlineInputBorder()),
+      cardTheme: CardThemeData(margin: EdgeInsets.zero),
+    );
+  }
+}
