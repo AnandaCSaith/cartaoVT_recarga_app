@@ -1,10 +1,14 @@
+import 'package:cartaovt_recarga_app/controllers/inicio_controller.dart';
 import 'package:cartaovt_recarga_app/controllers/login_controller.dart';
+import 'package:cartaovt_recarga_app/view/inicio_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key, required this.login});
+  const LoginScreen({super.key, required this.login, required this.inicio});
 
   final LoginController login;
+  final InicioController inicio;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -12,16 +16,23 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _cartaoController = TextEditingController();
-  final _senhaController = TextEditingController();
+  final _cartao = TextEditingController();
+  final _senha = TextEditingController();
   bool _senhaEscondida = true;
 
   void _entrar() {
     if (!_formKey.currentState!.validate()) return;
     if (!widget.login.entrar(_cartaoController.text, _senhaController.text)) return;
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => LoginScreen(login: widget.login)),
+      MaterialPageRoute(builder: (_) => InicioScreen(inicio: widget.inicio)),
     );
+  }
+
+  @override
+  void dispose() {
+    _cartao.dispose();
+    _senha.dispose();
+    super.dispose();
   }
 
   @override
@@ -59,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 32.0),
 
                   TextFormField(
-                    controller: _cartaoController,
+                    controller: _cartao,
                     decoration: InputDecoration(
                       labelText: 'Cartão',
                       hintText: '0000.0000',
@@ -67,12 +78,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.number,
+                    inputFormatters: [
+  FilteringTextInputFormatter.digitsOnly,
+],
                     validator: widget.login.validarCartao,
                   ),
                   SizedBox(height: 16.0),
 
                   TextFormField(
-                    controller: _senhaController,
+                    controller: _senha,
                     decoration: InputDecoration(
                       labelText: 'Senha',
                       hintText: '0000',
@@ -92,6 +106,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     obscureText: _senhaEscondida,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
                     keyboardType: TextInputType.number,
                     validator: widget.login.validarSenha,
                   ),
