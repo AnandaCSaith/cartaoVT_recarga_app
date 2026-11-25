@@ -1,11 +1,13 @@
 import 'package:cartaovt_recarga_app/controllers/inicio_controller.dart';
 import 'package:cartaovt_recarga_app/controllers/login_controller.dart';
+import 'package:cartaovt_recarga_app/view/inicio_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key, required this.login, required InicioController inicio});
+  const LoginScreen({super.key, required this.login, required this.inicio});
 
   final LoginController login;
+  final InicioController inicio;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -22,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!widget.login.entrar(_cartaoController.text, _senhaController.text))
       return;
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => LoginScreen(login: widget.login)),
+      MaterialPageRoute(builder: (_) => InicioScreen(inicio: widget.inicio)),
     );
   }
 

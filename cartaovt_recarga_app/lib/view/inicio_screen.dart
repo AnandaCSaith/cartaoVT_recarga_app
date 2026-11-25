@@ -17,9 +17,9 @@ class _InicioScreenState extends State<InicioScreen> {
   Widget build(BuildContext context) {
     //As abas 2 ainda provisórias: chegam nas issues #8.
     final abas = [
-      InicioScreen(controller: widget.inicio),
-      HistoricoScreen(controller: widget.inicio),
-      PerfilScreen(sessao: widget.sessao),
+      InicioScreen(inicio: widget.inicio),
+      //HistoricoScreen(inicio: widget.inicio),
+      //PerfilScreen(inicio: widget.inicio),
     ];
 
     return Scaffold(
