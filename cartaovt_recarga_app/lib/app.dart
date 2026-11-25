@@ -1,3 +1,4 @@
+import 'package:cartaovt_recarga_app/controllers/inicio_controller.dart';
 import 'package:cartaovt_recarga_app/controllers/login_controller.dart';
 import 'package:cartaovt_recarga_app/view/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +11,13 @@ class CartaoVTRecargaApp extends StatefulWidget {
 }
 
 class _CartaoVTRecargaAppState extends State<CartaoVTRecargaApp> {
-  final loginController = LoginController();
+  final _loginController = LoginController();
+  final _inicioController = InicioController();
 
   @override
   void dispose() {
-    loginController.dispose();
+    _loginController.dispose();
+    _inicioController.dispose();
     super.dispose();
   }
 
@@ -27,7 +30,7 @@ class _CartaoVTRecargaAppState extends State<CartaoVTRecargaApp> {
         primarySwatch: Colors.blue,
       ),
       darkTheme: ThemeData.dark(),
-      home: LoginScreen(login: loginController),
+      home: LoginScreen(login: _loginController, inicio: _inicioController),
     );
   }
 }

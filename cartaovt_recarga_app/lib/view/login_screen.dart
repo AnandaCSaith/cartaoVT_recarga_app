@@ -1,8 +1,9 @@
+import 'package:cartaovt_recarga_app/controllers/inicio_controller.dart';
 import 'package:cartaovt_recarga_app/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key, required this.login});
+  const LoginScreen({super.key, required this.login, required InicioController inicio});
 
   final LoginController login;
 
