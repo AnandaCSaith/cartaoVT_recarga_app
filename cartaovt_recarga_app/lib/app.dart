@@ -30,7 +30,7 @@ class _CartaoVTRecargaAppState extends State<CartaoVTRecargaApp> {
       debugShowCheckedModeBanner: false,
       theme: TemaCartaoVTRecargaApp.claro(),
       darkTheme: TemaCartaoVTRecargaApp.escuro(),
-      home: LoginScreen(login: _loginController, inicio: _inicioController),
+      home: LoginScreen(login: loginController),
     );
   }
 }
