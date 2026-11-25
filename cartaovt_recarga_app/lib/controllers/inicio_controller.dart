@@ -17,8 +17,10 @@ class InicioController {
 
     String dia = data.day.toString().padLeft(2, '0');
     String mes = data.month.toString().padLeft(2, '0');
-    String ano = data.year.toString().padLeft(4, '0');
-    return '$dia/$mes/$ano';
+    String hora = data.hour.toString().padLeft(2, '0');
+    String minuto = data.minute.toString().padLeft(2, '0');
+
+    return '$dia/$mes às $hora:$minuto';
   }
 
   void dispose() {}
