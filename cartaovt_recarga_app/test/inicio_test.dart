@@ -11,8 +11,10 @@ void main() {
   late InicioController inicio;
 
   setUp(() {
-    inicio = InicioController();
-  });
+  inicio = InicioController();
+
+  inicio.passageiro.ultimaRecarga = DateTime(2026, 11, 3, 8, 12);
+});
 
   Widget criarTela() {
     return MaterialApp(
@@ -25,7 +27,7 @@ void main() {
     (WidgetTester tester) async {
       await tester.pumpWidget(criarTela());
 
-      expect(find.text('Olá, Marina'), findsOneWidget);
+      expect(find.text('Olá, Ananda'), findsOneWidget);
       expect(find.text('R\$ 12,50'), findsOneWidget);
     },
   );
