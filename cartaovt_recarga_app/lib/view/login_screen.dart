@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _entrar() {
     if (!_formKey.currentState!.validate()) return;
-    if (!widget.login.entrar(_cartaoController.text, _senhaController.text)) return;
+    if (!widget.login.entrar(_cartao.text, _senha.text)) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (_) => InicioScreen(inicio: widget.inicio)),
     );
@@ -78,9 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.number,
-                    inputFormatters: [
-  FilteringTextInputFormatter.digitsOnly,
-],
+                    
                     validator: widget.login.validarCartao,
                   ),
                   SizedBox(height: 16.0),
