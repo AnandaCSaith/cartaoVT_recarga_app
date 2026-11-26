@@ -78,9 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       border: OutlineInputBorder(),
                     ),
                     keyboardType: TextInputType.number,
-                    inputFormatters: [
-  FilteringTextInputFormatter.digitsOnly,
-],
+                    
                     validator: widget.login.validarCartao,
                   ),
                   SizedBox(height: 16.0),
@@ -93,10 +91,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       prefixIcon: Icon(Icons.lock),
                       border: OutlineInputBorder(),
                       suffixIcon: IconButton(
+                        tooltip: _senhaEscondida ? 'Mostrar senha' : 'Ocultar senha',
                         icon: Icon(
-                          _senhaEscondida
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                        _senhaEscondida
+                          ? Icons.visibility
+                          : Icons.visibility_off,
                         ),
                         onPressed: () {
                           setState(() {

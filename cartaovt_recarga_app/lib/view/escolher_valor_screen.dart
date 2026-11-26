@@ -1,11 +1,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../view/pagamento_screen.dart';
+import '../controllers/inicio_controller.dart';
 
 import '../controllers/recarga_controller.dart';
 
 class EscolherValorScreen extends StatefulWidget {
-  const EscolherValorScreen({super.key});
+  
+  final InicioController inicio;
+
+  const EscolherValorScreen({
+    super.key,
+    required this.inicio,
+  });
 
   @override
   State<EscolherValorScreen> createState() =>
@@ -41,10 +49,18 @@ class _EscolherValorScreenState extends State<EscolherValorScreen> {
 
   // Continua para a próxima etapa
   void continuar() {
-    if (!controller.valorValido) return;
+  if (!controller.valorValido) return;
 
-    Navigator.pop(context, controller.valorSelecionado);
-  }
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => PagamentoScreen(
+        valorRecarga: controller.valorSelecionado!,
+        inicio: widget.inicio,
+      ),
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
