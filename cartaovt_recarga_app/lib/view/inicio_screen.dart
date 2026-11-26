@@ -102,15 +102,20 @@ class _InicioScreenState extends State<InicioScreen> {
                       height: 38,
 
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
+                        onPressed: () async {
+                          await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => EscolherValorScreen(),
+                              builder: (context) => EscolherValorScreen(
+                                inicio: controller,
+                              ),
                             ),
                           );
-                        },
 
+                          if (mounted) {
+                            setState(() {});
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF27845B),
                           foregroundColor: Colors.white,

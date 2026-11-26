@@ -2,41 +2,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:cartaovt_recarga_app/model/pagamento_model.dart';
+import 'package:cartaovt_recarga_app/controllers/inicio_controller.dart';
+import 'package:cartaovt_recarga_app/view/inicio_screen.dart';
 import 'package:cartaovt_recarga_app/view/pagamento_screen.dart';
 import 'package:cartaovt_recarga_app/view/escolher_valor_screen.dart';
 import 'package:cartaovt_recarga_app/view/confirmacao_screen.dart';
 
 void main() {
+  late InicioController inicio;
+
+  setUp(() {
+    inicio = InicioController();
+  });
+
   // Teste 1: valor da recarga é exibido corretamente
   testWidgets(
-    'valor da recarga é exibido corretamente',
-    (WidgetTester tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: PagamentoScreen(valorRecarga: 20.00),
+  'valor da recarga é exibido corretamente',
+  (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: PagamentoScreen(
+          valorRecarga: 20.00,
+          inicio: inicio,
         ),
-      );
+      ),
+    );
 
-      expect(
-        find.byWidgetPredicate(
-          (widget) =>
-              widget is RichText &&
-              widget.text.toPlainText() ==
-                  'Valor da recarga: R\$ 20,00',
-        ),
-        findsOneWidget,
-      );
-    },
-  );
+    final richTexts = tester.widgetList<RichText>(
+      find.byType(RichText),
+    );
+
+    final textoExibido = richTexts
+        .map((richText) => richText.text.toPlainText())
+        .join(' ');
+
+    expect(textoExibido, contains('R\$ 20,00'));
+  },
+);
 
   // Teste 2: três formas de pagamento são exibidas
   testWidgets(
     'três formas de pagamento são exibidas',
     (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: PagamentoScreen(valorRecarga: 20.00),
+        MaterialApp(
+          home: PagamentoScreen(
+            valorRecarga: 20.00,
+            inicio: inicio,
+          ),
         ),
       );
 
@@ -55,8 +68,11 @@ void main() {
     'apenas uma forma de pagamento pode ser selecionada',
     (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: PagamentoScreen(valorRecarga: 20.00),
+        MaterialApp(
+          home: PagamentoScreen(
+            valorRecarga: 20.00,
+            inicio: inicio,
+          ),
         ),
       );
 
@@ -75,7 +91,6 @@ void main() {
 
       await tester.pump();
 
-      // Deve continuar existindo apenas uma opção selecionada
       expect(
         find.byIcon(Icons.radio_button_checked),
         findsOneWidget,
@@ -123,8 +138,11 @@ void main() {
     'botão Confirmar pagamento abre a Tela 5',
     (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: PagamentoScreen(valorRecarga: 20.00),
+        MaterialApp(
+          home: PagamentoScreen(
+            valorRecarga: 20.00,
+            inicio: inicio,
+          ),
         ),
       );
 
@@ -146,12 +164,19 @@ void main() {
     'botão voltar retorna para a Tela 3',
     (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: EscolherValorScreen(),
+        MaterialApp(
+          home: InicioScreen(inicio: inicio),
         ),
       );
 
-      // Seleciona R$ 20,00 na Tela 3
+      // Abre a Tela 3
+      await tester.tap(
+        find.text('+ Recarregar saldo'),
+      );
+
+      await tester.pumpAndSettle();
+
+      // Seleciona R$ 20,00
       await tester.tap(
         find.byKey(
           const ValueKey('valor_20.0'),

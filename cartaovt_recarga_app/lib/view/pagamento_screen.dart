@@ -1,17 +1,20 @@
 
 import 'package:cartaovt_recarga_app/model/pagamento_model.dart';
 import 'package:flutter/material.dart';
-
+import '../controllers/inicio_controller.dart';
 import '../controllers/pagamento_controller.dart';
 import '../view/confirmacao_screen.dart';
 
 class PagamentoScreen extends StatefulWidget {
   final double valorRecarga;
 
+  final InicioController inicio;
+
   const PagamentoScreen({
-    super.key,
-    required this.valorRecarga,
-  });
+  super.key,
+  required this.valorRecarga,
+  required this.inicio,
+});
 
   @override
   State<PagamentoScreen> createState() => _PagamentoScreenState();
@@ -31,16 +34,17 @@ class _PagamentoScreenState extends State<PagamentoScreen> {
 
   // Confirma a forma de pagamento e abre a Tela 5
   void confirmarPagamento() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ConfirmacaoScreen(
-          valorRecarga: controller.pagamento.valorRecarga,
-          formaPagamento: controller.nomeFormaPagamento,
-        ),
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => ConfirmacaoScreen(
+        inicio: widget.inicio,
+        valorRecarga: controller.pagamento.valorRecarga,
+        formaPagamento: controller.nomeFormaPagamento,
       ),
-    );
-  }
+    ),
+  );
+}
 
   // Monta cada opção de pagamento
   Widget opcaoPagamento({

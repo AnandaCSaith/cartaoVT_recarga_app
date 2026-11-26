@@ -7,13 +7,19 @@ import 'package:cartaovt_recarga_app/view/inicio_screen.dart';
 import 'package:cartaovt_recarga_app/view/escolher_valor_screen.dart';
 
 void main() {
+  late InicioController inicio;
+
+  setUp(() {
+    inicio = InicioController();
+  });
+
   // Teste 1: quatro opções de valores são exibidas
   testWidgets(
     'quatro opções de valores são exibidas',
     (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: EscolherValorScreen(),
+        MaterialApp(
+          home: EscolherValorScreen(inicio: inicio),
         ),
       );
 
@@ -29,8 +35,8 @@ void main() {
     'campo Outro valor aceita digitação',
     (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: EscolherValorScreen(),
+        MaterialApp(
+          home: EscolherValorScreen(inicio: inicio),
         ),
       );
 
@@ -52,8 +58,8 @@ void main() {
     'seleção de um valor limpa o outro campo',
     (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: EscolherValorScreen(),
+        MaterialApp(
+          home: EscolherValorScreen(inicio: inicio),
         ),
       );
 
@@ -61,23 +67,19 @@ void main() {
         const ValueKey('campoOutroValor'),
       );
 
-      // Digita um valor personalizado
       await tester.enterText(campo, '15,50');
       await tester.pump();
 
-      // Seleciona um valor pronto
       await tester.tap(
         find.byKey(const ValueKey('valor_20.0')),
       );
       await tester.pump();
 
-      // Verifica se o campo personalizado foi limpo
       expect(
         tester.widget<TextField>(campo).controller!.text,
         '',
       );
 
-      // Digita novamente um valor personalizado
       await tester.enterText(campo, '25,00');
       await tester.pump();
 
@@ -90,7 +92,7 @@ void main() {
 
       expect(
         decoracao.color,
-        const Color(0xFFD8E9DF),
+      const Color(0xFFD8E9DF),
       );
     },
   );
@@ -100,8 +102,8 @@ void main() {
     'botão Continuar respeita o valor mínimo de R\$ 10,00',
     (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: EscolherValorScreen(),
+        MaterialApp(
+          home: EscolherValorScreen(inicio: inicio),
         ),
       );
 
@@ -110,7 +112,6 @@ void main() {
         'Continuar',
       );
 
-      // Sem valor, botão desabilitado
       expect(
         tester.widget<ElevatedButton>(botao).onPressed,
         isNull,
@@ -120,7 +121,6 @@ void main() {
         const ValueKey('campoOutroValor'),
       );
 
-      // Valor abaixo do mínimo
       await tester.enterText(campo, '9,99');
       await tester.pump();
 
@@ -129,7 +129,6 @@ void main() {
         isNull,
       );
 
-      // Valor igual ao mínimo
       await tester.enterText(campo, '10,00');
       await tester.pump();
 
@@ -144,15 +143,12 @@ void main() {
   testWidgets(
     'botão voltar retorna para a Tela 2',
     (WidgetTester tester) async {
-      final inicio = InicioController();
-
       await tester.pumpWidget(
         MaterialApp(
           home: InicioScreen(inicio: inicio),
         ),
       );
 
-      // Abre a Tela 3
       await tester.tap(
         find.text('+ Recarregar saldo'),
       );
@@ -163,7 +159,6 @@ void main() {
         findsOneWidget,
       );
 
-      // Volta para a Tela 2
       await tester.tap(
         find.byIcon(Icons.arrow_back),
       );
