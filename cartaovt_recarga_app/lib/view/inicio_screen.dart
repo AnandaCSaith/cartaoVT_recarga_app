@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'perfil_screen.dart';
 import '../controllers/inicio_controller.dart';
 import 'historico_screen.dart';
 import 'escolher_valor_screen.dart';
@@ -210,18 +210,25 @@ class _InicioScreenState extends State<InicioScreen> {
                   // Perfil
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         setState(() {
                           itemSelecionado = 2;
                         });
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Tela de Perfil ainda não implementada.',
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PerfilScreen(
+                              inicio: controller,
                             ),
                           ),
                         );
+
+                        if (mounted) {
+                          setState(() {
+                            itemSelecionado = 0;
+                          });
+                        }
                       },
 
                       child: _itemNavegacao(
