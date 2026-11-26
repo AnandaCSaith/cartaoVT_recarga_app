@@ -22,7 +22,7 @@ class _CartaoVTRecargaAppState extends State<CartaoVTRecargaApp> {
     super.dispose();
   }
 
-  @override
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,7 +30,7 @@ class _CartaoVTRecargaAppState extends State<CartaoVTRecargaApp> {
       debugShowCheckedModeBanner: false,
       theme: TemaCartaoVTRecargaApp.claro(),
       darkTheme: TemaCartaoVTRecargaApp.escuro(),
-      home: LoginScreen(login: loginController),
+      home: LoginScreen(login: LoginController(), inicio: InicioController()),
     );
   }
 }
